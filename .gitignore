@@ -1,0 +1,190 @@
+# ============================================
+# .gitignore - 3WA-CyberSECU (EventHub)
+# ============================================
+
+# ============================================
+# Fichiers sensibles et secrets
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.pem
+*.key
+*.cert
+secrets/
+*.secret
+JWT_SECRET
+DATABASE_URL
+
+# ============================================
+# Dependencies (Backend + Frontend)
+# ============================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnp
+.pnp.js
+
+# ============================================
+# Build outputs
+# ============================================
+dist/
+build/
+dist-ssr/
+*.tsbuildinfo
+.next/
+out/
+3WA_DEV2_rendu/dist/
+3WA_DEV2_rendu/build/
+eventhub_front/dist/
+eventhub_front/build/
+
+# ============================================
+# Logs
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.cursor/debug.log
+3WA_DEV2_rendu/logs/
+eventhub_front/logs/
+
+# ============================================
+# IDE et éditeurs
+# ============================================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.swn
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.cursor/
+*.code-workspace
+
+# ============================================
+# OS
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ============================================
+# Prisma (Backend)
+# ============================================
+# Note: Les migrations sont versionnées pour le rendu
+# Mais on ignore les fichiers générés
+3WA_DEV2_rendu/prisma/migrations/.migrate/
+*.db
+*.db-journal
+3WA_DEV2_rendu/prisma/dev.db*
+
+# ============================================
+# Tests et coverage
+# ============================================
+coverage/
+.nyc_output/
+.jest/
+*.test.js.snap
+.angular/
+3WA_DEV2_rendu/coverage/
+eventhub_front/coverage/
+
+# ============================================
+# Docker
+# ============================================
+docker-compose.override.yml
+.dockerignore
+.docker/
+
+# ============================================
+# Images et uploads
+# ============================================
+images/
+uploads/
+temp/
+tmp/
+3WA_DEV2_rendu/images/
+3WA_DEV2_rendu/uploads/
+
+# ============================================
+# Swagger (Backend)
+# ============================================
+3WA_DEV2_rendu/src/api/docs/swagger-output.json
+
+# ============================================
+# Cache
+# ============================================
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.npm/
+.yarn/
+.pnp.*
+.vite/
+3WA_DEV2_rendu/.cache/
+eventhub_front/.vite/
+
+# ============================================
+# Fichiers temporaires
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# ============================================
+# OneDrive (si synchronisé)
+# ============================================
+~$*
+*.odt
+*.docx.lock
+
+# ============================================
+# Fichiers de configuration locaux
+# ============================================
+*.local
+.local/
+tsconfig.tsbuildinfo
+
+# ============================================
+# Fichiers de déploiement
+# ============================================
+.vercel/
+.netlify/
+.serverless/
+.railway/
+
+# ============================================
+# TypeScript
+# ============================================
+*.tsbuildinfo
+
+# ============================================
+# Spécifique au projet
+# ============================================
+# Fichiers de debug Cursor
+.cursor/
+.cursorrules
+
+# Fichiers de backup
+*.backup
+backup/
