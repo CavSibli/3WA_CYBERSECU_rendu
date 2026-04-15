@@ -22,7 +22,6 @@ DATABASE_URL
 # Dependencies (Backend + Frontend)
 # ============================================
 node_modules/
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 .pnp
