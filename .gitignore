@@ -112,6 +112,8 @@ eventhub_front/coverage/
 docker-compose.override.yml
 .dockerignore
 .docker/
+!3WA_DEV2_rendu/.dockerignore
+!eventhub_front/.dockerignore
 
 # ============================================
 # Images et uploads

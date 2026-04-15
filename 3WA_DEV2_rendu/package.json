@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --exec tsx src/api/server.ts",
+    "start:prod": "node dist/api/server.js",
     "build": "tsc",
+    "migrate:deploy": "prisma migrate deploy",
     "test": "jest",
     "test:watch": "jest --watch",
     "seed": "tsx prisma/seed.ts",
