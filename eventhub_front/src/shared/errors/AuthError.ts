@@ -15,7 +15,7 @@ export class AuthError extends Error {
 
     // Maintenir le stack trace (compatible navigateurs + Node)
     const errorWithStack = Error as ErrorConstructor & {
-      captureStackTrace?: (targetObject: object, constructorOpt?: Function) => void
+      captureStackTrace?: (targetObject: object, constructorOpt?: abstract new (...args: never[]) => unknown) => void
     };
     errorWithStack.captureStackTrace?.(this, AuthError);
   }

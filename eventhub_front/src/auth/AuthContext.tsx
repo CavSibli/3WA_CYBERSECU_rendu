@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { login as apiLogin, register as apiRegister, getMe, logout as apiLogout } from '../api/client'
 import { AuthError } from '../shared/errors/AuthError'
-import { AuthContext } from './authContext'
+import { AuthContext } from './AuthContextStore'
 import type { User } from '../types/User'
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
