@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  tools {
+    nodejs "Node-20"
+  }
+
   environment {
     APP_NAME = "eventhub"
     BACKEND_CONTEXT = "3WA_DEV2_rendu"
@@ -102,7 +106,7 @@ printf "BACKEND_IMAGE=%s\nFRONTEND_IMAGE=%s\nJWT_SECRET=%s\nPOSTGRES_USER=%s\nPO
   "${POSTGRES_USER}" \
   "${POSTGRES_PASSWORD}" \
   "${POSTGRES_DB}" \
-  "http://localhost" > .env.deploy
+  "http://51.159.150.131" > .env.deploy
 
 docker compose --env-file .env.deploy -f "${DOCKER_COMPOSE_FILE}" pull
 docker compose --env-file .env.deploy -f "${DOCKER_COMPOSE_FILE}" up -d --remove-orphans
