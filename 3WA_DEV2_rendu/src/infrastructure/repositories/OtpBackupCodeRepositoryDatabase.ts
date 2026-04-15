@@ -12,19 +12,6 @@ export class OtpBackupCodeRepositoryDatabase implements OtpBackupCodeRepositoryI
     return Promise.all(codes.map((code) => bcrypt.hash(code, 10)));
   }
 
-  /**
-   * Vérifier un code de secours contre les codes hashés
-   */
-  private async verifyBackupCode(code: string, hashedCodes: string[]): Promise<boolean> {
-    for (const hashedCode of hashedCodes) {
-      const isValid = await bcrypt.compare(code, hashedCode);
-      if (isValid) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   async save(otpBackupCode: OtpBackupCode): Promise<OtpBackupCode> {
     // Hasher les codes avant stockage
     const hashedCodes = await this.hashBackupCodes(otpBackupCode.codes);

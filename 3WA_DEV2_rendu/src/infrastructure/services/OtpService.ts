@@ -46,7 +46,7 @@ export class OtpService {
    */
   generateKeyUri(accountName: string, secret: string, appName: string): string {
     return generateURI({
-      accountName,
+      label: accountName,
       issuer: appName,
       secret,
     });

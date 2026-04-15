@@ -1,4 +1,4 @@
-import { Event, EventProps } from "../../domain/entities/Event";
+import { Event } from "../../domain/entities/Event";
 import { EventRepositoryInterface } from "../../domain/interfaces/EventRepositoryInterface";
 import { prisma } from "../prisma/client";
 import { PrismaEvent } from "../../shared/types/PrismaTypes";
@@ -42,7 +42,7 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
       orderBy: { startDate: "asc" },
     });
 
-    return events.map((event) => this.mapToDomain(event));
+    return events.map((event: PrismaEvent) => this.mapToDomain(event));
   }
 
   async update(event: Event): Promise<Event> {
@@ -79,7 +79,7 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
       orderBy: { startDate: "asc" },
     });
 
-    return events.map((event) => this.mapToDomain(event));
+    return events.map((event: PrismaEvent) => this.mapToDomain(event));
   }
 
   async findByCategoryId(categoryId: string): Promise<Event[]> {
@@ -88,7 +88,7 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
       orderBy: { startDate: "asc" },
     });
 
-    return events.map((event) => this.mapToDomain(event));
+    return events.map((event: PrismaEvent) => this.mapToDomain(event));
   }
 
   private mapToDomain(prismaEvent: PrismaEvent): Event {

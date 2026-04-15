@@ -40,7 +40,7 @@ export class EventController {
   }
 
   // GET /api/events
-  async getAll(req: Request, res: Response, next: NextFunction) {
+  async getAll(_req: Request, res: Response, next: NextFunction) {
     try {
       const events = await this.getAllEventsUseCase.execute();
       res.jsonSuccess(events.map((event) => event.toJSON()));
@@ -50,7 +50,7 @@ export class EventController {
   }
 
   // GET /api/events/public
-  async getPublic(req: Request, res: Response, next: NextFunction) {
+  async getPublic(_req: Request, res: Response, next: NextFunction) {
     try {
       const { events } = await this.getPublicEventsUseCase.execute(2);
       res.jsonSuccess(events.map((event) => event.toJSON()));
@@ -62,7 +62,7 @@ export class EventController {
   // GET /api/events/:id
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const event = await this.getEventByIdUseCase.execute(id);
 
       if (!event) {
@@ -78,7 +78,7 @@ export class EventController {
   // PUT /api/events/:id
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const dto: UpdateEventDTO = {
         id,
         title: req.body.title,
@@ -103,7 +103,7 @@ export class EventController {
   // DELETE /api/events/:id
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       await this.deleteEventUseCase.execute(id);
       res.jsonSuccess({ message: "Événement supprimé avec succès" }, 200);
     } catch (error) {

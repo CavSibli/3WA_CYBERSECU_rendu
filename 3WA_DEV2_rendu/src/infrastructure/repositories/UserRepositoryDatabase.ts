@@ -29,21 +29,15 @@ export class UserRepositoryDatabase implements UserRepositoryInterface {
   }
 
   async save(user: User): Promise<User> {
-    const userData: Partial<PrismaUser> = {
+    const userData = {
       email: user.email,
       name: user.name,
       role: user.role,
       password: user.password,
       salt: user.salt,
+      ...(user.otpSecret !== undefined ? { otpSecret: user.otpSecret } : {}),
+      ...(user.otpEnabled !== undefined ? { otpEnabled: user.otpEnabled } : {}),
     };
-
-    // Ajouter les champs OTP seulement s'ils sont définis
-    if (user.otpSecret !== undefined) {
-      userData.otpSecret = user.otpSecret;
-    }
-    if (user.otpEnabled !== undefined) {
-      userData.otpEnabled = user.otpEnabled;
-    }
 
     const savedUser = await prisma.user.create({
       data: userData,
@@ -57,21 +51,15 @@ export class UserRepositoryDatabase implements UserRepositoryInterface {
       throw new Error("L'ID est requis pour la mise à jour");
     }
 
-    const userData: Partial<PrismaUser> = {
+    const userData = {
       email: user.email,
       name: user.name,
       role: user.role,
       password: user.password,
       salt: user.salt,
+      ...(user.otpSecret !== undefined ? { otpSecret: user.otpSecret } : {}),
+      ...(user.otpEnabled !== undefined ? { otpEnabled: user.otpEnabled } : {}),
     };
-
-    // Ajouter les champs OTP seulement s'ils sont définis
-    if (user.otpSecret !== undefined) {
-      userData.otpSecret = user.otpSecret;
-    }
-    if (user.otpEnabled !== undefined) {
-      userData.otpEnabled = user.otpEnabled;
-    }
 
     const updatedUser = await prisma.user.update({
       where: { id: user.id },

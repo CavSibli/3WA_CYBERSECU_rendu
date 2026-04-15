@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { type Secret, type SignOptions } from "jsonwebtoken";
 import { getEnvVariable } from "../../utility/utils";
 
 export interface UserPayload {
@@ -9,8 +9,8 @@ export interface UserPayload {
 }
 
 export class JwtService {
-  private readonly secret: string;
-  private readonly defaultExpiration: string;
+  private readonly secret: Secret;
+  private readonly defaultExpiration: SignOptions["expiresIn"];
 
   constructor() {
     this.secret = getEnvVariable("JWT_SECRET");
@@ -23,7 +23,7 @@ export class JwtService {
    * @param expiresIn - Durée de validité (par défaut: 1h)
    * @returns Le token JWT
    */
-  generateToken(user: UserPayload, expiresIn?: string): string {
+  generateToken(user: UserPayload, expiresIn?: SignOptions["expiresIn"]): string {
     const payload: UserPayload = {
       id: user.id,
       email: user.email,
@@ -33,7 +33,7 @@ export class JwtService {
 
     return jwt.sign(payload, this.secret, {
       expiresIn: expiresIn || this.defaultExpiration,
-    });
+    } as SignOptions);
   }
 
   /**
@@ -49,7 +49,7 @@ export class JwtService {
 
     return jwt.sign(payload, this.secret, {
       expiresIn: "5m", // Token temporaire valide 5 minutes
-    });
+    } as SignOptions);
   }
 
   /**

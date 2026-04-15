@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { A2fController } from "../controllers/A2fController";
 import { authenticationMiddleware } from "../middlewares/authentication.middleware";
-import { otpRateLimiter, strictOtpRateLimiter } from "../middlewares/rate-limit.middleware";
+import { strictOtpRateLimiter } from "../middlewares/rate-limit.middleware";
 import { GenerateQrCodeUseCase } from "../../application/usecases/GenerateQrCodeUseCase";
 import { EnableOtpUseCase } from "../../application/usecases/EnableOtpUseCase";
 import { VerifyOtpUseCase } from "../../application/usecases/VerifyOtpUseCase";

@@ -159,7 +159,7 @@ export class AuthController {
   }
 
   // POST /api/auth/logout
-  async logout(req: Request, res: Response, next: NextFunction) {
+  async logout(_req: Request, res: Response, next: NextFunction) {
     try {
       // Supprimer le cookie
       res.clearCookie("authToken", {

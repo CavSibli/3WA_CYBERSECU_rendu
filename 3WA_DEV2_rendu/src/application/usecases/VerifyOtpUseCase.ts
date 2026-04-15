@@ -4,6 +4,7 @@ import { OtpService } from "../../infrastructure/services/OtpService";
 import { OtpBackupCode } from "../../domain/entities/OtpBackupCode";
 import { OtpError, NotFoundError } from "../../shared/errors";
 import bcrypt from "bcrypt";
+import { Logger } from "../../infrastructure/services/Logger";
 
 export interface VerifyOtpDTO {
   userId: string;

@@ -12,7 +12,7 @@ export const errorHandlerMiddleware = (
   err: Error | AppError,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   const isProduction = process.env.NODE_ENV === "production";
   const statusCode = err instanceof AppError ? err.statusCode : 500;

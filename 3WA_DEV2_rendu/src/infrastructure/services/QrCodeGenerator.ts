@@ -21,8 +21,6 @@ export class QrCodeGenerator {
     
     const image = await qrcode.toDataURL(keyUri, {
       errorCorrectionLevel: "M",
-      type: "image/png",
-      quality: 0.92,
       margin: 1,
     });
 

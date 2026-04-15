@@ -14,14 +14,14 @@ export const validate = (schema: ZodSchema) => {
     } catch (error) {
       if (error instanceof ZodError) {
         // Formater les erreurs Zod de manière lisible
-        const errors = error.errors?.map((err) => ({
-          field: err.path?.join(".") || "",
-          message: err.message || "Erreur de validation",
-        })) || [];
+        const errors = error.issues.map((issue) => ({
+          field: issue.path.join(".") || "",
+          message: issue.message || "Erreur de validation",
+        }));
 
         // Construire un message d'erreur lisible
         const errorMessage = errors.length > 0 
-          ? errors.map(e => `${e.field ? e.field + ": " : ""}${e.message}`).join(", ")
+          ? errors.map((e) => `${e.field ? e.field + ": " : ""}${e.message}`).join(", ")
           : "Erreur de validation";
 
         return res.jsonError(errorMessage, 400);
