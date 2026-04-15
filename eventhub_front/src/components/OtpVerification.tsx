@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { verifyOtpLogin } from '../api/client'
-import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '../auth/useAuth'
 
 interface Props {
   email: string

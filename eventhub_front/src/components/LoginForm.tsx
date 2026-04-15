@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '../auth/useAuth'
 import { OtpVerification } from './OtpVerification'
 import { AuthError } from '../shared/errors/AuthError'
 
