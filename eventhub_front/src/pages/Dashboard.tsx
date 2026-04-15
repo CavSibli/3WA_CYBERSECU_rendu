@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '../auth/useAuth'
 import { fetchAllEvents } from '../api/client'
 import { useOtp } from '../hooks/useOtp'
 import type { Event } from '../types/Event'
@@ -11,7 +11,7 @@ import { OtpSetup } from '../components/OtpSetup'
 
 export const Dashboard: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth()
-  const { enable, disable, regenerateCodes, loading: otpLoading, error: otpError } = useOtp()
+  const { disable, regenerateCodes, loading: otpLoading, error: otpError } = useOtp()
   const [events, setEvents] = useState<Event[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)

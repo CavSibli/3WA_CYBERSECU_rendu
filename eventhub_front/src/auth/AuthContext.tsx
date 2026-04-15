@@ -1,19 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import type { User } from '../types/User'
+import React, { useEffect, useState } from 'react'
 import { login as apiLogin, register as apiRegister, getMe, logout as apiLogout } from '../api/client'
 import { AuthError } from '../shared/errors/AuthError'
-
-interface AuthContextValue {
-  user: User | null
-  token: string | null
-  isAuthenticated: boolean
-  login: (email: string, password: string) => Promise<void>
-  register: (email: string, name: string, password: string) => Promise<void>
-  logout: () => void
-  refreshUser: () => Promise<void>
-}
-
-const AuthContext = createContext<AuthContextValue | undefined>(undefined)
+import { AuthContext } from './authContext'
+import type { User } from '../types/User'
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
@@ -100,12 +89,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   )
 }
 
-export const useAuth = (): AuthContextValue => {
-  const ctx = useContext(AuthContext)
-  if (!ctx) {
-    throw new Error('useAuth must be used within an AuthProvider')
-  }
-  return ctx
-}
+
 
 
