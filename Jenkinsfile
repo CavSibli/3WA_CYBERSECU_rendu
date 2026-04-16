@@ -108,8 +108,32 @@ printf "BACKEND_IMAGE=%s\nFRONTEND_IMAGE=%s\nJWT_SECRET=%s\nPOSTGRES_USER=%s\nPO
   "${POSTGRES_DB}" \
   "http://51.159.150.131" > .env.deploy
 
-docker compose --env-file .env.deploy -f "${DOCKER_COMPOSE_FILE}" pull
-docker compose --env-file .env.deploy -f "${DOCKER_COMPOSE_FILE}" up -d --remove-orphans
+#region agent log
+echo "[deploy-debug] Detecting compose command"
+docker --version || true
+docker compose version || true
+docker-compose version || true
+#endregion
+
+if docker compose version >/dev/null 2>&1; then
+  COMPOSE_CMD="docker compose"
+elif command -v docker-compose >/dev/null 2>&1; then
+  COMPOSE_CMD="docker-compose"
+else
+  echo "[deploy-debug] No compose command available"
+  exit 1
+fi
+
+#region agent log
+echo "[deploy-debug] Using compose command: ${COMPOSE_CMD}"
+#endregion
+
+set -a
+. ./.env.deploy
+set +a
+
+${COMPOSE_CMD} -f "${DOCKER_COMPOSE_FILE}" pull
+${COMPOSE_CMD} -f "${DOCKER_COMPOSE_FILE}" up -d --remove-orphans
 rm -f .env.deploy
           """
         }
