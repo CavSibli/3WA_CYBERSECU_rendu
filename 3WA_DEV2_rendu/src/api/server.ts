@@ -72,24 +72,6 @@ app.use(errorHandlerMiddleware);
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  // #region agent log
-  fetch("http://127.0.0.1:7723/ingest/3e757b8c-e55b-48a6-b819-71791092e113", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Debug-Session-Id": "432427",
-    },
-    body: JSON.stringify({
-      sessionId: "432427",
-      runId: "startup-check",
-      hypothesisId: "H1",
-      location: "src/api/server.ts:75",
-      message: "Backend server listening",
-      data: { port: PORT, nodeEnv: process.env.NODE_ENV ?? "undefined" },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
   console.log(`Server is running at http://localhost:${PORT}`);
   console.log(`API endpoints available at http://localhost:${PORT}/api/events`);
   console.log(`Auth endpoints available at http://localhost:${PORT}/api/auth`);
