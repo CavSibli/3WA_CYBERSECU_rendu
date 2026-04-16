@@ -125,15 +125,15 @@ else
 fi
 
 #region agent log
-echo "[deploy-debug] Using compose command: ${COMPOSE_CMD}"
+echo "[deploy-debug] Using compose command: \$COMPOSE_CMD"
 #endregion
 
 set -a
 . ./.env.deploy
 set +a
 
-${COMPOSE_CMD} -f "${DOCKER_COMPOSE_FILE}" pull
-${COMPOSE_CMD} -f "${DOCKER_COMPOSE_FILE}" up -d --remove-orphans
+\$COMPOSE_CMD -f "${DOCKER_COMPOSE_FILE}" pull
+\$COMPOSE_CMD -f "${DOCKER_COMPOSE_FILE}" up -d --remove-orphans
 rm -f .env.deploy
           """
         }
