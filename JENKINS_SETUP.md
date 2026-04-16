@@ -28,11 +28,13 @@ sudo usermod -aG docker $USER
 
 Reconnecte-toi en SSH apres la commande `usermod`.
 
-## 3) Lancer Jenkins avec Docker Compose
+## 3) Construire puis lancer Jenkins avec Docker Compose
 
 Depuis la racine du repo (`Projet/3WA_CYBERSECU_rendu`):
 
 ```bash
+docker compose -f docker-compose.jenkins.yml down
+docker compose -f docker-compose.jenkins.yml build --no-cache
 docker compose -f docker-compose.jenkins.yml up -d
 ```
 
@@ -41,6 +43,9 @@ Verifier:
 ```bash
 docker ps
 docker logs eventhub_jenkins
+docker exec eventhub_jenkins docker --version
+docker exec eventhub_jenkins docker compose version
+docker exec eventhub_jenkins docker ps
 ```
 
 Recuperer le mot de passe admin initial:
@@ -59,6 +64,9 @@ Installer:
 - Credentials Binding
 - SSH Agent
 - NodeJS
+
+Le point critique pour le stage `Deploy` est que `docker exec eventhub_jenkins docker compose version`
+doit fonctionner. Si cette commande echoue, le `Jenkinsfile` ne pourra pas deployer avec Compose.
 
 ## 5) Credentials Jenkins a creer
 

@@ -1,6 +1,9 @@
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    build:
+      context: .
+      dockerfile: jenkins/Dockerfile
+    image: eventhub-jenkins:latest
     container_name: eventhub_jenkins
     restart: unless-stopped
     user: root
@@ -10,7 +13,6 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
 
 volumes:
   jenkins_home:
