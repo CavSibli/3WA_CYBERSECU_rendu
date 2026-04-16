@@ -14,6 +14,9 @@ import swaggerOptions from "./docs/swagger.config";
 const app = express();
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
+// Nginx reverse proxy forwards client IP/proto headers in production.
+app.set("trust proxy", 1);
+
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
