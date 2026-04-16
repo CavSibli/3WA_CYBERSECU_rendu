@@ -24,4 +24,4 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "npm run migrate:deploy && npm run start:prod"]
+CMD ["sh", "-c", "npm run db:prepare:prod && npm run start:prod"]

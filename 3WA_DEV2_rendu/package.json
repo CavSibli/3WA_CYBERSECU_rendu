@@ -9,6 +9,7 @@
     "start:prod": "tsx src/api/server.ts",
     "build": "prisma generate && tsc",
     "migrate:deploy": "prisma migrate deploy",
+    "db:prepare:prod": "node scripts/prepareProdDb.mjs",
     "test": "jest",
     "test:watch": "jest --watch",
     "seed": "tsx prisma/seed.ts",
