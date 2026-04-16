@@ -29,7 +29,7 @@ services:
       postgres:
         condition: service_healthy
     command: >
-      sh -c "npm run migrate:deploy && npm run start:prod"
+      sh -c "npm run db:prepare:prod && npm run start:prod"
 
   frontend:
     image: ${FRONTEND_IMAGE:-eventhub-frontend:latest}
