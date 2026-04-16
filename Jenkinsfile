@@ -112,14 +112,14 @@ FRONTEND_URL=http://51.159.150.131
 EOF
 
 debug_log() {
-  node -e "fetch('http://127.0.0.1:7723/ingest/3e757b8c-e55b-48a6-b819-71791092e113',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'432427'},body:JSON.stringify({sessionId:'432427',runId:'jenkins-deploy-post-fix',hypothesisId:process.argv[1],location:process.argv[2],message:process.argv[3],data:JSON.parse(process.argv[4]),timestamp:Date.now()})}).catch(()=>{})" "$1" "$2" "$3" "$4"
+  node -e "fetch('http://127.0.0.1:7723/ingest/3e757b8c-e55b-48a6-b819-71791092e113',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'432427'},body:JSON.stringify({sessionId:'432427',runId:'jenkins-deploy-post-fix',hypothesisId:process.argv[1],location:process.argv[2],message:process.argv[3],data:{detail:process.argv[4]},timestamp:Date.now()})}).catch(()=>{})" "$1" "$2" "$3" "$4"
 }
 
 #region agent log
 echo "[deploy-debug] Verifying native docker compose"
 docker --version
 docker compose version
-debug_log "H4" "Jenkinsfile:111" "native-compose-verified" "{\"composeCommand\":\"docker compose\"}"
+debug_log "H4" "Jenkinsfile:111" "native-compose-verified" "docker compose"
 #endregion
 
 set -a
@@ -130,7 +130,7 @@ docker compose -f "$DOCKER_COMPOSE_FILE" pull
 docker compose -f "$DOCKER_COMPOSE_FILE" up -d --remove-orphans
 
 #region agent log
-debug_log "H4" "Jenkinsfile:121" "native-compose-deploy-finished" "{\"status\":\"completed\"}"
+debug_log "H4" "Jenkinsfile:121" "native-compose-deploy-finished" "completed"
 #endregion
 
 rm -f .env.deploy
