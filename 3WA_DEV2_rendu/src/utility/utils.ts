@@ -1,4 +1,5 @@
 import "dotenv/config";
+import type { Request } from "express";
 
 export const getEnvVariable = (variableName: string): string => {
   const value = process.env[variableName];
@@ -28,4 +29,11 @@ export const extractToken = (authorization: string): string | null => {
   }
 
   return token;
+};
+
+export const isHttpsRequest = (req: Request): boolean => {
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  const proto = Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto;
+
+  return req.secure || proto === "https";
 };

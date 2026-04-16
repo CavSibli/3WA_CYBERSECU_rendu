@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { ExtendedRequest } from "../../shared/types/ExpressTypes";
 import crypto from "crypto";
+import { isHttpsRequest } from "../../utility/utils";
 
 const CSRF_TOKEN_COOKIE = "csrf-token";
 const CSRF_TOKEN_HEADER = "x-csrf-token";
@@ -10,12 +11,14 @@ const CSRF_TOKEN_HEADER = "x-csrf-token";
  * Génère un token CSRF et le stocke dans un cookie
  */
 export const csrfMiddleware = (req: ExtendedRequest, res: Response, next: NextFunction) => {
+  const secureCookie = isHttpsRequest(req);
+
   // Générer un token CSRF si absent
   if (!req.cookies?.[CSRF_TOKEN_COOKIE]) {
     const token = crypto.randomBytes(32).toString("hex");
     res.cookie(CSRF_TOKEN_COOKIE, token, {
       httpOnly: false, // Doit être accessible par JavaScript pour le header
-      secure: process.env.NODE_ENV === "production",
+      secure: secureCookie,
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000, // 24 heures
     });

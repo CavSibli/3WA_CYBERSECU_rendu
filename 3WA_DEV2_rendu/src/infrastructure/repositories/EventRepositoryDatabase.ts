@@ -92,7 +92,7 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
   }
 
   private mapToDomain(prismaEvent: PrismaEvent): Event {
-    return new Event({
+    return Event.fromPersistence({
       id: prismaEvent.id,
       title: prismaEvent.title,
       description: prismaEvent.description,

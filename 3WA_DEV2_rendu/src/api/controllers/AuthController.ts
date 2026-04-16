@@ -4,6 +4,7 @@ import { AuthenticateWithOtpUseCase } from "../../application/usecases/Authentic
 import { CreateUserUseCase } from "../../application/usecases/CreateUserUseCase";
 import { JwtService } from "../../infrastructure/services/JwtService";
 import { User } from "../../domain/entities/User";
+import { isHttpsRequest } from "../../utility/utils";
 
 export class AuthController {
   constructor(
@@ -81,7 +82,7 @@ export class AuthController {
       // Définir le token dans un cookie httpOnly
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // HTTPS en production
+        secure: isHttpsRequest(req),
         sameSite: "strict",
         maxAge: 60 * 60 * 1000, // 1 heure
       });
@@ -116,7 +117,7 @@ export class AuthController {
       // Définir le token dans un cookie httpOnly
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // HTTPS en production
+        secure: isHttpsRequest(req),
         sameSite: "strict",
         maxAge: 60 * 60 * 1000, // 1 heure
       });
@@ -175,7 +176,7 @@ export class AuthController {
       // Définir le token dans un cookie httpOnly
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // HTTPS en production
+        secure: isHttpsRequest(req),
         sameSite: "strict",
         maxAge: 60 * 60 * 1000, // 1 heure
       });
@@ -210,7 +211,7 @@ export class AuthController {
       // Supprimer le cookie
       res.clearCookie("authToken", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: isHttpsRequest(_req),
         sameSite: "strict",
       });
 

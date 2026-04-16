@@ -14,11 +14,15 @@ export interface EventProps {
   updatedAt?: Date;
 }
 
+interface EventOptions {
+  skipTemporalValidation?: boolean;
+}
+
 export class Event {
   private props: EventProps;
 
-  constructor(props: EventProps) {
-    this.validate(props);
+  constructor(props: EventProps, options: EventOptions = {}) {
+    this.validate(props, options);
     this.props = {
       ...props,
       createdAt: props.createdAt || new Date(),
@@ -26,7 +30,7 @@ export class Event {
     };
   }
 
-  private validate(props: EventProps): void {
+  private validate(props: EventProps, options: EventOptions = {}): void {
     // Validation du titre
     if (!props.title || props.title.trim() === "") {
       throw new Error("Le titre est obligatoire");
@@ -44,7 +48,7 @@ export class Event {
 
     const startDate = new Date(props.startDate);
     const now = new Date();
-    if (startDate <= now) {
+    if (!options.skipTemporalValidation && startDate <= now) {
       throw new Error("La date de début doit être dans le futur");
     }
 
@@ -154,5 +158,9 @@ export class Event {
       createdAt: this.props.createdAt,
       updatedAt: this.props.updatedAt,
     };
+  }
+
+  static fromPersistence(props: EventProps): Event {
+    return new Event(props, { skipTemporalValidation: true });
   }
 }
