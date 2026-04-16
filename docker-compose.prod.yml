@@ -47,12 +47,49 @@ services:
       - backend
     ports:
       - "80:80"
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    command: >
-      /bin/sh -c 'echo "[agent-log][432427][H5] nginx-config-test";
-      nginx -t;
-      exec nginx -g "daemon off;"'
+    command: |
+      /bin/sh -c '
+      cat <<'"'"'EOF'"'"' >/etc/nginx/conf.d/default.conf
+      server {
+          listen 80;
+          server_name _;
+
+          client_max_body_size 10m;
+
+          location / {
+              proxy_pass http://frontend:80;
+              proxy_http_version 1.1;
+              proxy_set_header Host $$host;
+              proxy_set_header X-Real-IP $$remote_addr;
+              proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $$scheme;
+          }
+
+          location /api/ {
+              proxy_pass http://backend:8000/api/;
+              proxy_http_version 1.1;
+              proxy_set_header Host $$host;
+              proxy_set_header X-Real-IP $$remote_addr;
+              proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $$scheme;
+          }
+
+          location /api-docs/ {
+              proxy_pass http://backend:8000/api-docs/;
+              proxy_http_version 1.1;
+              proxy_set_header Host $$host;
+              proxy_set_header X-Real-IP $$remote_addr;
+              proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $$scheme;
+          }
+      }
+      EOF
+      echo "[agent-log][432427][H6] generated-nginx-config"
+      sed -n "1,120p" /etc/nginx/conf.d/default.conf
+      echo "[agent-log][432427][H7] nginx-config-test"
+      nginx -t
+      exec nginx -g "daemon off;"
+      '
 
 volumes:
   pgdata:
