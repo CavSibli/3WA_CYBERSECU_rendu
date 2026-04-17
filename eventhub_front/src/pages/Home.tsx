@@ -31,7 +31,7 @@ export const Home: React.FC = () => {
       <header className="app-header">
         <div>
           <h1>EventHub</h1>
-          <p>Découvrez les prochains test événements, et connectez-vous pour tout voir.</p>
+          <p>Découvrez les prochains événements, et connectez-vous pour tout voir.</p>
         </div>
         <button
           type="button"
