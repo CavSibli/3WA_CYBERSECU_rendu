@@ -31,28 +31,6 @@ export class AuthController {
     try {
       const { email, password } = req.body;
 
-      // #region agent log
-      fetch("http://127.0.0.1:7723/ingest/3e757b8c-e55b-48a6-b819-71791092e113", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Debug-Session-Id": "432427",
-        },
-        body: JSON.stringify({
-          sessionId: "432427",
-          runId: "auth-500-debug",
-          hypothesisId: "H9",
-          location: "src/api/controllers/AuthController.ts:33",
-          message: "Auth login request",
-          data: {
-            hasEmail: typeof email === "string",
-            hasPassword: typeof password === "string",
-          },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
-
       const { user, requiresOtp } = await this.authenticateUserUseCase.execute({ email, password });
 
       // Si OTP est requis, retourner un token temporaire
@@ -134,30 +112,6 @@ export class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, name, password, role } = req.body;
-
-      // #region agent log
-      fetch("http://127.0.0.1:7723/ingest/3e757b8c-e55b-48a6-b819-71791092e113", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Debug-Session-Id": "432427",
-        },
-        body: JSON.stringify({
-          sessionId: "432427",
-          runId: "auth-500-debug",
-          hypothesisId: "H10",
-          location: "src/api/controllers/AuthController.ts:125",
-          message: "Auth register request",
-          data: {
-            hasEmail: typeof email === "string",
-            hasName: typeof name === "string",
-            hasPassword: typeof password === "string",
-            hasRole: typeof role === "string",
-          },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
 
       const { user } = await this.createUserUseCase.execute({
         email,
